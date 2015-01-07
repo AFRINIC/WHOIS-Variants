@@ -43,6 +43,7 @@ public class BlobModelAdapter implements ModelAdapter {
         if (whoisObject instanceof RpslWhoisObject) {
             Iterator<Map.Entry<String, String>> iterator = whoisObject.getKeyValueIterator();
             boolean processedFirst = false;
+            StringBuilder id = new StringBuilder();
             StringBuilder sb = new StringBuilder();
             while (iterator.hasNext()) {
                 Map.Entry<String, String> entry = iterator.next();
@@ -50,10 +51,12 @@ public class BlobModelAdapter implements ModelAdapter {
                     sb.append("\n").append(entry.getKey()).append(":").append(entry.getValue());
                 } else {
                     sb.append(entry.getKey()).append(":").append(entry.getValue());
+                    id.append(entry.getKey()).append(":").append(entry.getValue());
                     processedFirst = true;
                 }
             }
             BlobModel model = new BlobModel();
+            model.setId(id.toString());
             model.setObject(sb.toString().getBytes());
             return model;
         }

@@ -9,4 +9,6 @@ public interface Store {
     void persist(WhoisObject whoisObject, Reporter reporter);
 
     List<WhoisObject> load(Class clazz);
+
+    WhoisObject load(Class clazz, String key);
 }

@@ -70,21 +70,21 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
     }
 
 
-    protected void assertDataEquals(Map<String, String> expectedData, Store store, Class searchCriteria) {
+    protected void assertDataEquals(Map<String, String> expectedData, Store store, Class searchCriteria, String key) {
         List<String> searchResult = new ArrayList<String>();
         List<String> matchedKeys = new ArrayList<String>();
-        List<WhoisObject> result = store.load(searchCriteria);
-        for (WhoisObject wo : result) {
-            RpslWhoisObject rwo = (RpslWhoisObject) wo;
-            searchResult.add(rwo.toString());
-            for (Map.Entry<String, String> entry : expectedData.entrySet()) {
-                if (rwo.get(entry.getKey()) != null) {
-                    assertEquals(entry.getValue(), rwo.get(entry.getKey()));
-                    matchedKeys.add(entry.getKey());
-                }
+        WhoisObject wo = store.load(searchCriteria, key);
+        //for (WhoisObject wo : result) {
+        RpslWhoisObject rwo = (RpslWhoisObject) wo;
+        searchResult.add(rwo.toString());
+        for (Map.Entry<String, String> entry : expectedData.entrySet()) {
+            if (rwo.get(entry.getKey()) != null) {
+                assertEquals(entry.getValue(), rwo.get(entry.getKey()));
+                matchedKeys.add(entry.getKey());
             }
         }
-        assertEquals("Search result: \n" + searchResult, expectedData.size(), result.size());
+        //}
+        //assertEquals("Search result: \n" + searchResult, expectedData.size(), result.size());
         assertEquals("Matched keys: " + matchedKeys, matchedKeys.size(), expectedData.size());
     }
 

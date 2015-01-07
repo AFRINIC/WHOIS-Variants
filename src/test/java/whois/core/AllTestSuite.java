@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({UnitTestSuite.class,
-    IntegrationTestSuite.class})
+        IntegrationTestSuite.class})
 public class AllTestSuite {
 }

@@ -26,7 +26,7 @@ public class SpringDao implements Store {
     public void persist(WhoisObject whoisObject, Reporter reporter) {
         Session session = sessionFactory.openSession();
         StoreModel storeModel = modelAdapter.convertToStoreModel(whoisObject);
-        session.persist(storeModel);
+        session.saveOrUpdate(storeModel);
         session.flush();
         if (reporter != null) {
             reporter.report("Successfully added:\n" + whoisObject.toString());
@@ -43,6 +43,16 @@ public class SpringDao implements Store {
         for (StoreModel storeModel : result) {
             retVal.add(modelAdapter.convertToWhoisObject(storeModel));
         }
+        session.close();
+        return retVal;
+    }
+
+    @Override
+    public WhoisObject load(Class clazz, String key) {
+        Session session = sessionFactory.openSession();
+        Criteria c = session.createCriteria(clazz);
+        StoreModel storeModel = (StoreModel) session.get(clazz, key);
+        WhoisObject retVal = modelAdapter.convertToWhoisObject(storeModel);
         session.close();
         return retVal;
     }

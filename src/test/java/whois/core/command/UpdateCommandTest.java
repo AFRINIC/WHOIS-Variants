@@ -9,7 +9,7 @@ import whois.core.framework.Store;
 import whois.core.model.blob.BlobModel;
 
 import javax.inject.Inject;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -30,25 +30,21 @@ public class UpdateCommandTest extends AbstractDatabaseTestCase {
         subject.setParameter("w:q");
         subject.run();
 
-        Map<String, String> expectedData = new HashMap<String, String>();
-        expectedData.put("a", "b");
-        expectedData.put("c", "d");
+        Map<String, String> expectedData = new LinkedHashMap<String, String>();
         expectedData.put("w", "q");
-        assertDataEquals(expectedData, store, BlobModel.class);
+        assertDataEquals(expectedData, store, BlobModel.class, "w:q");
     }
 
     @Test
     public void testUpdate_002() {
         subject.setParameter("w:q");
         subject.run();
-        subject.setParameter("e:r");
+        subject.setParameter("w:q\ne:r");
         subject.run();
 
-        Map<String, String> expectedData = new HashMap<String, String>();
-        expectedData.put("a", "b");
-        expectedData.put("c", "d");
+        Map<String, String> expectedData = new LinkedHashMap<String, String>();
         expectedData.put("w", "q");
         expectedData.put("e", "r");
-        assertDataEquals(expectedData, store, BlobModel.class);
+        assertDataEquals(expectedData, store, BlobModel.class, "w:q");
     }
 }

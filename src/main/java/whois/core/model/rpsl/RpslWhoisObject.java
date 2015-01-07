@@ -3,8 +3,8 @@ package whois.core.model.rpsl;
 import whois.core.framework.WhoisObject;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -14,7 +14,7 @@ public class RpslWhoisObject implements WhoisObject, Serializable {
 
     private transient static final String RPSL_LINE_FORMAT = "%-16s%s";
 
-    private Map<String, String> keyValueMap = new HashMap<String, String>();
+    private Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
 
     @Override
     public Iterator<Map.Entry<String, String>> getKeyValueIterator() {
