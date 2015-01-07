@@ -4,7 +4,6 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import whois.core.command.QueryCommand;
-import whois.core.framework.Command;
 
 import javax.inject.Named;
 
@@ -21,11 +20,8 @@ public class QuerySocketEventListener extends AbstractSocketEventListener {
         super.messageReceived(session, message);
         String command = message.toString();
         String trimmedCommand = command.trim();
-        if (isExitCommand(command)) {
-            session.close();
-            return;
-        }
         process(session, command);
+        session.close();
     }
 
     @Override

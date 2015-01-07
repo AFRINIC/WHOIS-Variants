@@ -4,7 +4,6 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import whois.core.command.UpdateCommand;
-import whois.core.framework.Command;
 import whois.core.framework.Reporter;
 
 import javax.inject.Inject;

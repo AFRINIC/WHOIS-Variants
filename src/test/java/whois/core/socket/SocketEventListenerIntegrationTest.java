@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import whois.core.AbstractDatabaseTestCase;
 
 import javax.inject.Inject;
 
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/whois-core-context.xml", "/whois-core-test-context.xml"})
-public class SocketEventListenerIntegrationTest {
+public class SocketEventListenerIntegrationTest extends AbstractDatabaseTestCase {
 
     @Inject
     private UpdateSocketEventListener usel;
@@ -33,17 +34,21 @@ public class SocketEventListenerIntegrationTest {
     private IoSession qSession;
 
     @Before
-    public void setup() {
+    public void setUpMockito() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testIntegration() throws Exception {
-        String rpsl001 = "a:b";
-        String rpsl002 = "c:d";
+        String rpsl001 = "e:f";
+        String rpsl002 = "g:h";
         String query = "blob";
-        String uExpectation = "1 object(s) found\nSuccessfully added:\na:              b\n\n";
-        String qExpectation = "a:              b\n\nc:              d\n\n";
+        String uExpectation001 = "1 object(s) found\nSuccessfully added:\ne:              f\n\n";
+        String uExpectation002 = "1 object(s) found\nSuccessfully added:\ng:              h\n\n";
+        String qExpectation = "a:              b\n\n" +
+                "c:              d\n\n" +
+                "e:              f\n\n" +
+                "g:              h\n\n";
 
         // Execute
         usel.messageReceived(uSession, rpsl001);
@@ -53,7 +58,8 @@ public class SocketEventListenerIntegrationTest {
         qsel.messageReceived(qSession, query);
 
         // Verify
-        verify(uSession).write(uExpectation);
+        verify(uSession).write(uExpectation001);
+        verify(uSession).write(uExpectation002);
         verify(qSession).write(qExpectation);
     }
 

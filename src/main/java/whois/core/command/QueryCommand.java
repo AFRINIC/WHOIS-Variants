@@ -28,7 +28,7 @@ public class QueryCommand implements Command {
     public void run() {
         Class objectType = modelAdapter.getKeyToModelClassMap().get(commandLine);
         if (objectType == null) {
-            throw new CommandException("Unknown object type. Known types: " + modelAdapter.getKeyToModelClassMap().keySet());
+            throw new CommandException("Unknown object type " + commandLine + ". Known types: " + modelAdapter.getKeyToModelClassMap().keySet());
         }
         List<WhoisObject> result = store.load(objectType);
         for (WhoisObject whoisObject : result) {
