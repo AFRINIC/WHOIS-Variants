@@ -8,7 +8,6 @@ import whois.core.model.rpsl.RpslWhoisObject;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -20,14 +19,6 @@ public class BlobModelAdapter implements ModelAdapter {
 
     @Inject
     private WhoisObjectAdapter whoisObjectAdapter;
-
-    private Map<String, Class> keyToModelClassMap;
-
-    public BlobModelAdapter() {
-        keyToModelClassMap = new HashMap<String, Class>();
-        keyToModelClassMap.put("blob", BlobModel.class);
-        keyToModelClassMap.put("store", StoreModel.class);
-    }
 
     @Override
     public WhoisObject convertToWhoisObject(StoreModel storeModel) {
@@ -64,7 +55,7 @@ public class BlobModelAdapter implements ModelAdapter {
     }
 
     @Override
-    public Map<String, Class> getKeyToModelClassMap() {
-        return keyToModelClassMap;
+    public Class getModelClass(String id) {
+        return BlobModel.class;
     }
 }

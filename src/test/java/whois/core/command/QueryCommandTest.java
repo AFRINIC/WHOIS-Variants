@@ -21,12 +21,22 @@ public class QueryCommandTest extends AbstractDatabaseTestCase {
     private QueryCommand subject;
 
     @Test
-    public void testQuery() {
-        subject.setParameter("blob");
+    public void testQuery_001() {
+        subject.setParameter("a:b");
         subject.run();
 
         assertEquals(
-                toResult(getWhoisObjectA(), getWhoisObjectC()),
+                toResult(getWhoisObjectA()),
+                subject.getResult());
+    }
+
+    @Test
+    public void testQuery_002() {
+        subject.setParameter("c:d");
+        subject.run();
+
+        assertEquals(
+                toResult(getWhoisObjectC()),
                 subject.getResult());
     }
 }

@@ -1,11 +1,13 @@
 package whois.core.command;
 
 import org.springframework.context.annotation.Scope;
-import whois.core.framework.*;
+import whois.core.framework.Command;
+import whois.core.framework.ModelAdapter;
+import whois.core.framework.Store;
+import whois.core.framework.WhoisObject;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 
 /**
  * Created by yogesh on 12/23/14.
@@ -26,12 +28,9 @@ public class QueryCommand implements Command {
 
     @Override
     public void run() {
-        Class objectType = modelAdapter.getKeyToModelClassMap().get(commandLine);
-        if (objectType == null) {
-            throw new CommandException("Unknown object type " + commandLine + ". Known types: " + modelAdapter.getKeyToModelClassMap().keySet());
-        }
-        List<WhoisObject> result = store.load(objectType);
-        for (WhoisObject whoisObject : result) {
+        Class objectType = modelAdapter.getModelClass(null);
+        WhoisObject whoisObject = store.load(objectType, commandLine);
+        if (whoisObject != null) {
             queryResultAccumulator.append(whoisObject.toString()).append("\n");
         }
     }

@@ -45,11 +45,11 @@ public class CommandIntegrationTest extends AbstractDatabaseTestCase {
     public void testIntegration_001() {
         updateCommand.setParameter("w:q");
         updateCommand.run();
-        queryCommand.setParameter("blob");
+        queryCommand.setParameter("w:q");
         queryCommand.run();
 
         assertEquals(
-                toResult(getWhoisObjectA(), getWhoisObjectC(), whoisObject3),
+                toResult(whoisObject3),
                 queryCommand.getResult());
     }
 
@@ -59,11 +59,11 @@ public class CommandIntegrationTest extends AbstractDatabaseTestCase {
         updateCommand.run();
         updateCommand.setParameter("a:s");
         updateCommand.run();
-        queryCommand.setParameter("blob");
+        queryCommand.setParameter("a:s");
         queryCommand.run();
 
         assertEquals(
-                toResult(getWhoisObjectA(), getWhoisObjectC(), whoisObject3, whoisObject4),
+                toResult(whoisObject4),
                 queryCommand.getResult());
     }
 }

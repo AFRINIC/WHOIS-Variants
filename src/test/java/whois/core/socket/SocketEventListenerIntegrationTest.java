@@ -42,13 +42,10 @@ public class SocketEventListenerIntegrationTest extends AbstractDatabaseTestCase
     public void testIntegration() throws Exception {
         String rpsl001 = "e:f";
         String rpsl002 = "g:h";
-        String query = "blob";
+        String query = "g:h";
         String uExpectation001 = "1 object(s) found\nSuccessfully added:\ne:              f\n\n";
         String uExpectation002 = "1 object(s) found\nSuccessfully added:\ng:              h\n\n";
-        String qExpectation = "a:              b\n\n" +
-                "c:              d\n\n" +
-                "e:              f\n\n" +
-                "g:              h\n\n";
+        String qExpectation = "g:              h\n\n";
 
         // Execute
         usel.messageReceived(uSession, rpsl001);
