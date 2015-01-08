@@ -20,7 +20,6 @@ public class BlobModelAdapter implements ModelAdapter {
     @Inject
     private WhoisObjectAdapter whoisObjectAdapter;
 
-    @Override
     public WhoisObject convertToWhoisObject(StoreModel storeModel) {
         if (storeModel instanceof BlobModel) {
             BlobModel blobModel = (BlobModel) storeModel;
@@ -29,7 +28,6 @@ public class BlobModelAdapter implements ModelAdapter {
         return null;
     }
 
-    @Override
     public StoreModel convertToStoreModel(WhoisObject whoisObject) {
         if (whoisObject instanceof RpslWhoisObject) {
             Iterator<Map.Entry<String, String>> iterator = whoisObject.getKeyValueIterator();
@@ -54,7 +52,6 @@ public class BlobModelAdapter implements ModelAdapter {
         return null;
     }
 
-    @Override
     public Class getModelClass(String id) {
         return BlobModel.class;
     }

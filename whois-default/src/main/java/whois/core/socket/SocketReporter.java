@@ -10,14 +10,12 @@ import javax.inject.Named;
 @Named
 public class SocketReporter implements Reporter {
 
-    private StringBuilder responseAccumulator = new StringBuilder();
+    private final StringBuilder responseAccumulator = new StringBuilder();
 
-    @Override
     public void report(String message) {
         responseAccumulator.append(message).append("\n");
     }
 
-    @Override
     public void clear() {
         responseAccumulator.setLength(0);
     }

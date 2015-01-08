@@ -2,7 +2,7 @@ package whois.core.model.rpsl;
 
 import whois.core.api.Credential;
 import whois.core.api.CredentialFilter;
-import whois.core.password.PasswordCredential;
+import whois.core.auth.PasswordCredential;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Scanner;
 @Named
 public class RpslPasswordCredentialFilter implements CredentialFilter {
 
-    @Override
     public Collection<Credential> extractGlobalTokens(String rpslObjectS) {
         if (rpslObjectS != null) {
             rpslObjectS = RpslWhoisObjectAdapter.rpslCleanBlankLines(rpslObjectS);
@@ -31,7 +30,6 @@ public class RpslPasswordCredentialFilter implements CredentialFilter {
         return null;
     }
 
-    @Override
     public Collection<Credential> extractLocalTokens(String rpslObjectS) {
         if (rpslObjectS != null) {
             rpslObjectS = RpslWhoisObjectAdapter.rpslCleanBlankLines(rpslObjectS);
@@ -40,7 +38,6 @@ public class RpslPasswordCredentialFilter implements CredentialFilter {
         return null;
     }
 
-    @Override
     public String cleanGlobalTokens(String rpslObjectS) {
         if (rpslObjectS != null) {
             rpslObjectS = RpslWhoisObjectAdapter.rpslCleanBlankLines(rpslObjectS);
@@ -62,7 +59,6 @@ public class RpslPasswordCredentialFilter implements CredentialFilter {
         return null;
     }
 
-    @Override
     public String cleanLocalTokens(String rpslObjectS) {
         Scanner scanner = new Scanner(rpslObjectS);
         StringBuilder concatUtil = new StringBuilder();
@@ -87,15 +83,17 @@ public class RpslPasswordCredentialFilter implements CredentialFilter {
      * Extract all credentials from RPSL
      *
      * @param rpsl RPSL to extractLocalTokens from
-     * @return
+     * @return Extracted credentials
      */
-    public Collection<Credential> extractCredentials(String rpsl) {
+    Collection<Credential> extractCredentials(String rpsl) {
         Scanner scanner = new Scanner(rpsl);
         Collection<Credential> credentialCollection = new ArrayList<Credential>();
         while (scanner.hasNextLine()) {
             try {
                 credentialCollection.add(new PasswordCredential(scanner.nextLine()));
             } catch (InvalidRpslLineException e) {
+                //noinspection UnnecessaryContinue
+                continue;
             }
         }
         return credentialCollection.isEmpty() ? null : credentialCollection;

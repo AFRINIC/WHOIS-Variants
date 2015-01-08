@@ -1,4 +1,4 @@
-package whois.core.password;
+package whois.core.auth;
 
 import whois.core.api.Credential;
 import whois.core.model.rpsl.InvalidRpslLineException;
@@ -8,7 +8,7 @@ import whois.core.model.rpsl.InvalidRpslLineException;
  */
 public class PasswordCredential implements Credential {
 
-    private String key = "password";
+    private static final String KEY = "password";
 
     private String password;
 
@@ -16,11 +16,11 @@ public class PasswordCredential implements Credential {
         parse(line);
     }
 
-    public void parse(String line) {
+    void parse(String line) {
         String[] lineVals = line.split(":");
         if (lineVals.length != 2) {
             throw new InvalidRpslLineException(line);
-        } else if (key.equalsIgnoreCase(lineVals[0].trim())) {
+        } else if (KEY.equalsIgnoreCase(lineVals[0].trim())) {
             this.password = lineVals[1];
         } else {
             throw new InvalidRpslLineException(line);

@@ -22,7 +22,6 @@ public class SpringDao implements Store {
     @Inject
     private ModelAdapter modelAdapter;
 
-    @Override
     public void persist(WhoisObject whoisObject, Reporter reporter) {
         Session session = sessionFactory.openSession();
         StoreModel storeModel = modelAdapter.convertToStoreModel(whoisObject);
@@ -34,7 +33,6 @@ public class SpringDao implements Store {
         session.close();
     }
 
-    @Override
     public List<WhoisObject> load(Class clazz) {
         Session session = sessionFactory.openSession();
         Criteria c = session.createCriteria(clazz);
@@ -47,10 +45,16 @@ public class SpringDao implements Store {
         return retVal;
     }
 
-    @Override
+    /**
+     * Before querying, Key is normalized according to rules in <code>RpslWhoisObject#put</code>.
+     *
+     * @param clazz Model class
+     * @param key   Lookup key
+     * @return WHOIS Object found
+     */
     public WhoisObject load(Class clazz, String key) {
+        key = key.trim().replaceFirst(":\\s+", ":");
         Session session = sessionFactory.openSession();
-        Criteria c = session.createCriteria(clazz);
         StoreModel storeModel = (StoreModel) session.get(clazz, key);
         WhoisObject retVal = modelAdapter.convertToWhoisObject(storeModel);
         session.close();

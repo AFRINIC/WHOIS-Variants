@@ -3,7 +3,7 @@ package whois.core.socket;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import whois.core.command.QueryCommand;
+import whois.core.api.QueryCommand;
 
 import javax.inject.Named;
 
@@ -19,7 +19,6 @@ public class QuerySocketEventListener extends AbstractSocketEventListener {
     public void messageReceived(IoSession session, Object message) throws Exception {
         super.messageReceived(session, message);
         String command = message.toString();
-        String trimmedCommand = command.trim();
         process(session, command);
         session.close();
     }

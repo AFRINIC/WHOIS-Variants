@@ -2,7 +2,7 @@ package whois.core;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import whois.core.command.CommandIntegrationTest;
+import whois.core.api.CommandIntegrationTest;
 import whois.core.socket.SocketEventListenerIntegrationTest;
 
 /**

@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import whois.core.api.Credential;
-import whois.core.password.PasswordCredential;
+import whois.core.auth.PasswordCredential;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 /**
  * Created by yogesh on 12/16/14.
  */
+@SuppressWarnings("UnusedAssignment")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/whois-core-context.xml", "/whois-core-test-context.xml"})
 public class RpslWhoisObjectAdapterTest {
@@ -180,7 +181,7 @@ public class RpslWhoisObjectAdapterTest {
     public void testConvert04() {
         RpslWhoisObject rpslWhoisObject = (RpslWhoisObject) subject.convertToWhoisObject(single_whoisObjects_withoutCredentials_01);
         assertEquals("ç", rpslWhoisObject.get("B"));
-        assertEquals("h ", rpslWhoisObject.get(" # "));
+        assertEquals("h", rpslWhoisObject.get(" # "));
     }
 
 }

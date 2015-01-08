@@ -1,10 +1,6 @@
-package whois.core.command;
+package whois.core.api;
 
 import org.springframework.context.annotation.Scope;
-import whois.core.api.Command;
-import whois.core.api.ModelAdapter;
-import whois.core.api.Store;
-import whois.core.api.WhoisObject;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,9 +20,8 @@ public class QueryCommand implements Command {
 
     private String commandLine;
 
-    private StringBuilder queryResultAccumulator = new StringBuilder();
+    private final StringBuilder queryResultAccumulator = new StringBuilder();
 
-    @Override
     public void run() {
         Class objectType = modelAdapter.getModelClass(null);
         WhoisObject whoisObject = store.load(objectType, commandLine);
@@ -35,12 +30,10 @@ public class QueryCommand implements Command {
         }
     }
 
-    @Override
     public void setParameter(String commandLine) {
         this.commandLine = commandLine;
     }
 
-    @Override
     public String getResult() {
         return queryResultAccumulator.toString();
     }

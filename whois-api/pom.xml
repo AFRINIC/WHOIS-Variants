@@ -9,6 +9,5 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>whois.core</groupId>
     <artifactId>whois-api</artifactId>
 </project>

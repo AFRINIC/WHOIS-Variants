@@ -20,12 +20,10 @@ public class BlobModel implements StoreModel, Serializable {
 
     private byte[] object;
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }

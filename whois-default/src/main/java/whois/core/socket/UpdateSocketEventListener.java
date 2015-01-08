@@ -4,7 +4,7 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import whois.core.api.Reporter;
-import whois.core.command.UpdateCommand;
+import whois.core.api.UpdateCommand;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +20,7 @@ public class UpdateSocketEventListener extends AbstractSocketEventListener {
     @Inject
     private Reporter reporter;
 
-    private StringBuilder multiLineAccumulator = new StringBuilder();
+    private final StringBuilder multiLineAccumulator = new StringBuilder();
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {

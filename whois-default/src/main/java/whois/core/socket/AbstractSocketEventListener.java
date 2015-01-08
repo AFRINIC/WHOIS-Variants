@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.MDC;
 import whois.core.api.Command;
 import whois.core.api.CommandException;
-import whois.core.command.CommandFactory;
+import whois.core.api.CommandFactory;
 
 import javax.inject.Inject;
 import java.net.InetAddress;
@@ -15,13 +15,13 @@ import java.net.InetSocketAddress;
 /**
  * Created by yogesh on 1/6/15.
  */
-public abstract class AbstractSocketEventListener extends IoHandlerAdapter {
+abstract class AbstractSocketEventListener extends IoHandlerAdapter {
 
 
-    protected static final String EOF = "\u0004";
+    private static final String EOF = "\u0004";
 
     @Inject
-    protected CommandFactory commandFactory;
+    private CommandFactory commandFactory;
 
     @Override
     public void sessionCreated(IoSession session) throws Exception {
@@ -45,13 +45,13 @@ public abstract class AbstractSocketEventListener extends IoHandlerAdapter {
 
     protected abstract Class getCommandId();
 
-    protected String extractClientIp(IoSession session) {
+    String extractClientIp(IoSession session) {
         InetSocketAddress socketAddress = (InetSocketAddress) session.getRemoteAddress();
         InetAddress inetAddress = socketAddress.getAddress();
         return inetAddress.getHostAddress();
     }
 
-    protected boolean isExitCommand(String command) {
+    boolean isExitCommand(String command) {
         String trimmedCommand = command.trim();
         return command.startsWith(EOF)
                 || "quit".equalsIgnoreCase(trimmedCommand)
@@ -59,7 +59,7 @@ public abstract class AbstractSocketEventListener extends IoHandlerAdapter {
                 || "bye".equalsIgnoreCase(trimmedCommand);
     }
 
-    protected void process(IoSession session, String commandLine) {
+    void process(IoSession session, String commandLine) {
         Command updateCommand = commandFactory.getCommand(getCommandId());
         updateCommand.setParameter(commandLine);
         updateCommand.run();

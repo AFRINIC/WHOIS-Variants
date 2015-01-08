@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by yogesh on 1/7/15.
@@ -38,14 +39,12 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
 
     private IDatabaseTester databaseTester;
 
-    private IDataSet dataSet;
-
     private RpslWhoisObject whoisObjectA = null;
 
     private RpslWhoisObject whoisObjectC = null;
 
     public void afterPropertiesSet() throws Exception {
-        dataSet = new FlatXmlDataSetBuilder().build(fileInputStream(getDatasetFilename()));
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(fileInputStream(getDatasetFilename()));
         databaseTester = new JdbcDatabaseTester(driverClassName, databaseUrl, username, password);
         databaseTester.setDataSet(dataSet);
         whoisObjectA = new RpslWhoisObject();
@@ -64,17 +63,16 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
         databaseTester.onTearDown();
     }
 
-    protected String getDatasetFilename() {
+    public String getDatasetFilename() {
         return "dbunit-dataset.xml";
     }
 
 
     protected void assertDataEquals(Map<String, String> expectedData, Store store, Class searchCriteria, String key) {
-        List<String> searchResult = new ArrayList<String>();
         List<String> matchedKeys = new ArrayList<String>();
         WhoisObject wo = store.load(searchCriteria, key);
+        assertNotNull(wo);
         RpslWhoisObject rwo = (RpslWhoisObject) wo;
-        searchResult.add(rwo.toString());
         for (Map.Entry<String, String> entry : expectedData.entrySet()) {
             if (rwo.get(entry.getKey()) != null) {
                 assertEquals(entry.getValue(), rwo.get(entry.getKey()));
@@ -103,8 +101,8 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
     /**
      * Look for file on classpath
      *
-     * @param filename
-     * @return
+     * @param filename File name.
+     * @return Input stream
      */
     private InputStream fileInputStream(String filename) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

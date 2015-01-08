@@ -12,14 +12,15 @@ import java.util.Collection;
  * Created by yogesh on 12/17/14.
  */
 @Named
-public class RpslCredentialFilterChain {
+class RpslCredentialFilterChain {
 
     @Inject
-    Collection<CredentialFilter> credentialFilterCollection;
+    private Collection<CredentialFilter> credentialFilterCollection;
 
     public Collection<Credential> extractGlobalTokens(String rpslObjectS) {
         Collection<Credential> allCredentials = new ArrayList<Credential>();
-        String rpslCopy = new String(rpslObjectS);
+        String rpslCopy = rpslObjectS;
+        assert credentialFilterCollection != null;
         for (CredentialFilter currentFilter : credentialFilterCollection) {
             Collection<Credential> globalCredentials = currentFilter.extractGlobalTokens(rpslCopy);
             if (globalCredentials != null) {
@@ -32,7 +33,7 @@ public class RpslCredentialFilterChain {
 
     public Collection<Credential> extractLocalTokens(String rpslObjectS) {
         Collection<Credential> allCredentials = new ArrayList<Credential>();
-        String rpslCopy = new String(rpslObjectS);
+        String rpslCopy = rpslObjectS;
         for (CredentialFilter currentFilter : credentialFilterCollection) {
             Collection<Credential> localCredentials = currentFilter.extractLocalTokens(rpslCopy);
             if (localCredentials != null) {
@@ -44,7 +45,7 @@ public class RpslCredentialFilterChain {
     }
 
     public String cleanLocalTokens(String rpslObjectS) {
-        String rpslCopy = new String(rpslObjectS);
+        String rpslCopy = rpslObjectS;
         for (CredentialFilter currentFilter : credentialFilterCollection) {
             rpslCopy = currentFilter.cleanLocalTokens(rpslCopy);
         }
@@ -52,7 +53,7 @@ public class RpslCredentialFilterChain {
     }
 
     public String cleanGlobalTokens(String rpslObjectS) {
-        String rpslCopy = new String(rpslObjectS);
+        String rpslCopy = rpslObjectS;
         for (CredentialFilter currentFilter : credentialFilterCollection) {
             rpslCopy = currentFilter.cleanGlobalTokens(rpslCopy);
         }

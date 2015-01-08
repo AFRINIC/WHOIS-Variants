@@ -14,9 +14,8 @@ public class RpslWhoisObject implements WhoisObject, Serializable {
 
     private transient static final String RPSL_LINE_FORMAT = "%-16s%s";
 
-    private Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
+    private final Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
 
-    @Override
     public Iterator<Map.Entry<String, String>> getKeyValueIterator() {
         return keyValueMap.entrySet().iterator();
     }
@@ -25,8 +24,16 @@ public class RpslWhoisObject implements WhoisObject, Serializable {
         return keyValueMap.get(key.trim().toLowerCase());
     }
 
+    /**
+     * Before recording:
+     * - Key is trimmed and converted into all lower case, and
+     * - Value is trimmed.
+     *
+     * @param key   Key
+     * @param value Value
+     */
     public void put(String key, String value) {
-        keyValueMap.put(key.trim().toLowerCase(), value);
+        keyValueMap.put(key.trim().toLowerCase(), value.trim());
     }
 
     @Override

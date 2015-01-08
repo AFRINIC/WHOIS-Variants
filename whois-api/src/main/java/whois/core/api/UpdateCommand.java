@@ -1,8 +1,7 @@
-package whois.core.command;
+package whois.core.api;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
-import whois.core.api.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,12 +38,12 @@ public class UpdateCommand implements Command {
     private String result;
 
     @Transactional
-    @Override
     public void run() {
         Collection<Credential> globalCredentials = whoisObjectAdapter.extractGlobalTokens(rpsl);
         rpsl = whoisObjectAdapter.cleanGlobalTokens(rpsl);
         Collection<String> rpslCollection = whoisObjectAdapter.split(rpsl);
         reporter.report((rpslCollection == null ? 0 : rpslCollection.size()) + " object(s) found");
+        assert rpslCollection != null;
         for (String rpslObjectS : rpslCollection) {
             Collection<Credential> localCredentials = whoisObjectAdapter.extractLocalTokens(rpslObjectS);
             Collection<Credential> allCredentials = new ArrayList<Credential>();
@@ -65,12 +64,10 @@ public class UpdateCommand implements Command {
         reporter.clear();
     }
 
-    @Override
     public void setParameter(String rpsl) {
         this.rpsl = rpsl;
     }
 
-    @Override
     public String getResult() {
         return result;
     }

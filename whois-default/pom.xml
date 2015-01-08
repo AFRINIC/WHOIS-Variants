@@ -3,15 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <properties>
-        <whoisCore.version>1.0-SNAPSHOT</whoisCore.version>
-        <javax.version>1</javax.version>
         <hibernate.version>3.6.0.Final</hibernate.version>
         <hibernateAnnotations.version>3.5.6-Final</hibernateAnnotations.version>
         <commonsDbcp.version>1.4</commonsDbcp.version>
         <h2.version>1.4.183</h2.version>
         <logback.version>1.1.2</logback.version>
         <jclOverSlf4j.version>1.7.7</jclOverSlf4j.version>
-        <spring.version>4.1.3.RELEASE</spring.version>
         <aspectj.version>1.8.4</aspectj.version>
         <mina.version>2.0.7</mina.version>
         <junit.version>4.11</junit.version>
@@ -26,7 +23,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>whois.core</groupId>
     <artifactId>whois-default</artifactId>
 
     <build>
@@ -71,11 +67,6 @@
             <version>${whoisCore.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
@@ -118,25 +109,16 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>

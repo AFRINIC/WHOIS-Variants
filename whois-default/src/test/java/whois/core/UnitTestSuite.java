@@ -2,8 +2,8 @@ package whois.core;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import whois.core.command.QueryCommandTest;
-import whois.core.command.UpdateCommandTest;
+import whois.core.api.QueryCommandTest;
+import whois.core.api.UpdateCommandTest;
 import whois.core.database.SpringDaoTest;
 import whois.core.model.rpsl.BlobModelAdapterTest;
 import whois.core.model.rpsl.RpslWhoisObjectAdapterTest;

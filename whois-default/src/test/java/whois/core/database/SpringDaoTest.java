@@ -41,12 +41,8 @@ public class SpringDaoTest extends AbstractDatabaseTestCase {
         subject.persist(rwo, null);
 
         Map<String, String> expectedData = new LinkedHashMap<String, String>();
-        expectedData.put("a", " b");
+        expectedData.put("a", "b");
         expectedData.put("b", "x");
-        assertDataEquals(expectedData, subject, BlobModel.class, "a: b");
-
-        Map<String, String> expectedDataA = new LinkedHashMap<String, String>();
-        expectedDataA.put("a", "b");
-        assertDataEquals(expectedDataA, subject, BlobModel.class, "a:b");
+        assertDataEquals(expectedData, subject, BlobModel.class, " a: b  ");
     }
 }

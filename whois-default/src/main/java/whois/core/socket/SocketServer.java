@@ -19,17 +19,17 @@ import java.nio.charset.Charset;
 /**
  * Created by yogesh on 12/22/14.
  */
-public class SocketServer {
+class SocketServer {
 
     private static final Logger logger = LoggerFactory.getLogger(SocketServer.class);
 
-    public static final int QUERY_PORT = 4443;
+    private static final int QUERY_PORT = 4443;
 
-    public static final int UPDATE_PORT = 4444;
+    private static final int UPDATE_PORT = 4444;
 
-    public static final int SOCKET_READ_BUFFER_SIZE = 2048;
+    private static final int SOCKET_READ_BUFFER_SIZE = 2048;
 
-    public static final String CHARSET = "UTF-8";
+    private static final String CHARSET = "UTF-8";
 
     public static void main(String[] args) throws IOException {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/whois-core-context.xml");

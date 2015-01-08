@@ -1,7 +1,6 @@
-package whois.core.command;
+package whois.core.api;
 
 import org.springframework.context.ApplicationContext;
-import whois.core.api.Command;
 
 import javax.inject.Inject;
 import javax.inject.Named;
