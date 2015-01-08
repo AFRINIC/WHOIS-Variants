@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <!-- OBJECT values are Base64 encoded because they represent BLOB data -->
+    <LAST ID="a:b" OBJECT="YTpiCg=="/>
+    <!-- a:b -->
+    <LAST ID="c:d" OBJECT="YzpkCg=="/>
+    <!-- c:d -->
+</dataset>
