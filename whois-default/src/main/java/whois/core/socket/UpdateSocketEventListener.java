@@ -3,7 +3,7 @@ package whois.core.socket;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import whois.core.api.Reporter;
+import whois.core.api.Observer;
 import whois.core.api.UpdateCommand;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ public class UpdateSocketEventListener extends AbstractSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(UpdateSocketEventListener.class);
 
     @Inject
-    private Reporter reporter;
+    private Observer observer;
 
     private final StringBuilder multiLineAccumulator = new StringBuilder();
 

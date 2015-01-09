@@ -7,5 +7,5 @@ import java.util.Collection;
  */
 @SuppressWarnings({"EmptyMethod", "UnusedParameters"})
 public interface Authenticator {
-    void authenticate(WhoisObject whoisObject, Collection<Credential> allCredentials, Reporter reporter);
+    void authenticate(WhoisObject whoisObject, Collection<Credential> allCredentials, Observer observer);
 }

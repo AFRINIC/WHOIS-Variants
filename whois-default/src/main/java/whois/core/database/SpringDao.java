@@ -22,13 +22,13 @@ public class SpringDao implements Store {
     @Inject
     private ModelAdapter modelAdapter;
 
-    public void persist(WhoisObject whoisObject, Reporter reporter) {
+    public void persist(WhoisObject whoisObject, Observer observer) {
         Session session = sessionFactory.openSession();
         StoreModel storeModel = modelAdapter.convertToStoreModel(whoisObject);
         session.saveOrUpdate(storeModel);
         session.flush();
-        if (reporter != null) {
-            reporter.report("Successfully added:\n" + whoisObject.toString());
+        if (observer != null) {
+            observer.notify("Successfully added:\n" + whoisObject.toString());
         }
         session.close();
     }

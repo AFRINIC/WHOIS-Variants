@@ -10,12 +10,12 @@ import java.util.Collection;
  */
 @Named
 public class NoopBusinessRuleEngine implements Authenticator, Validator, Enricher {
-    public void authenticate(WhoisObject whoisObject, Collection<Credential> allCredentials, Reporter reporter) {
+    public void authenticate(WhoisObject whoisObject, Collection<Credential> allCredentials, Observer observer) {
     }
 
-    public void enrich(WhoisObject whoisObject, Reporter reporter) {
+    public void enrich(WhoisObject whoisObject, Observer observer) {
     }
 
-    public void validate(WhoisObject whoisObject, Reporter reporter) {
+    public void validate(WhoisObject whoisObject, Observer observer) {
     }
 }

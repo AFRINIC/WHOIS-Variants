@@ -5,5 +5,5 @@ package whois.core.api;
  */
 @SuppressWarnings({"EmptyMethod", "UnusedParameters"})
 public interface Enricher {
-    void enrich(WhoisObject whoisObject, Reporter reporter);
+    void enrich(WhoisObject whoisObject, Observer observer);
 }

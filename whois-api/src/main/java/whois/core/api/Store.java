@@ -6,7 +6,7 @@ import java.util.List;
  * Created by yogesh on 12/15/14.
  */
 public interface Store {
-    void persist(WhoisObject whoisObject, Reporter reporter);
+    void persist(WhoisObject whoisObject, Observer observer);
 
     List<WhoisObject> load(Class clazz);
 

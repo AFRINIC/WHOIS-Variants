@@ -18,7 +18,7 @@ public class UpdateCommand implements Command {
     private String rpsl;
 
     @Inject
-    private Reporter reporter;
+    private Observer observer;
 
     @Inject
     private WhoisObjectAdapter whoisObjectAdapter;
@@ -35,14 +35,12 @@ public class UpdateCommand implements Command {
     @Inject
     private Store store;
 
-    private String result;
-
     @Transactional
     public void run() {
         Collection<Credential> globalCredentials = whoisObjectAdapter.extractGlobalTokens(rpsl);
         rpsl = whoisObjectAdapter.cleanGlobalTokens(rpsl);
         Collection<String> rpslCollection = whoisObjectAdapter.split(rpsl);
-        reporter.report((rpslCollection == null ? 0 : rpslCollection.size()) + " object(s) found");
+        observer.notify((rpslCollection == null ? 0 : rpslCollection.size()) + " object(s) found");
         assert rpslCollection != null;
         for (String rpslObjectS : rpslCollection) {
             Collection<Credential> localCredentials = whoisObjectAdapter.extractLocalTokens(rpslObjectS);
@@ -55,13 +53,11 @@ public class UpdateCommand implements Command {
             }
             rpslObjectS = whoisObjectAdapter.cleanLocalTokens(rpslObjectS);
             WhoisObject whoisObject = whoisObjectAdapter.convertToWhoisObject(rpslObjectS);
-            authenticator.authenticate(whoisObject, allCredentials, reporter);
-            validator.validate(whoisObject, reporter);
-            enricher.enrich(whoisObject, reporter);
-            store.persist(whoisObject, reporter);
+            authenticator.authenticate(whoisObject, allCredentials, observer);
+            validator.validate(whoisObject, observer);
+            enricher.enrich(whoisObject, observer);
+            store.persist(whoisObject, observer);
         }
-        result = reporter.toString();
-        reporter.clear();
     }
 
     public void setParameter(String rpsl) {
@@ -69,6 +65,6 @@ public class UpdateCommand implements Command {
     }
 
     public String getResult() {
-        return result;
+        return observer.report();
     }
 }

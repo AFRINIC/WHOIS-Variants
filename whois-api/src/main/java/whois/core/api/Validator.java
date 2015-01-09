@@ -5,5 +5,5 @@ package whois.core.api;
  */
 @SuppressWarnings({"EmptyMethod", "UnusedParameters"})
 public interface Validator {
-    void validate(WhoisObject whoisObject, Reporter reporter);
+    void validate(WhoisObject whoisObject, Observer observer);
 }
