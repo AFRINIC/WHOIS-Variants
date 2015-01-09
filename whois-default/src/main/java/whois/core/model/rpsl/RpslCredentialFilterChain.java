@@ -14,6 +14,7 @@ import java.util.Collection;
 @Named
 class RpslCredentialFilterChain {
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     @Inject
     private Collection<CredentialFilter> credentialFilterCollection;
 

@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import whois.core.api.Observer;
 import whois.core.api.Store;
 import whois.core.api.WhoisObject;
 import whois.core.model.rpsl.RpslWhoisObject;
@@ -63,6 +64,7 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
         databaseTester.onTearDown();
     }
 
+    @SuppressWarnings({"WeakerAccess", "SameReturnValue"})
     public String getDatasetFilename() {
         return "dbunit-dataset.xml";
     }
@@ -70,7 +72,14 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
 
     protected void assertDataEquals(Map<String, String> expectedData, Store store, Class searchCriteria, String key) {
         List<String> matchedKeys = new ArrayList<String>();
-        WhoisObject wo = store.load(searchCriteria, key);
+        WhoisObject wo = store.load(searchCriteria, key, new Observer() {
+            public void notify(String message) {
+            }
+
+            public String report() {
+                return null;
+            }
+        });
         assertNotNull(wo);
         RpslWhoisObject rwo = (RpslWhoisObject) wo;
         for (Map.Entry<String, String> entry : expectedData.entrySet()) {
@@ -83,7 +92,7 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
     }
 
     protected String toResult(RpslWhoisObject... rwos) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("Found:\n");
         for (RpslWhoisObject rwo : rwos) {
             sb.append(rwo.toString()).append("\n");
         }

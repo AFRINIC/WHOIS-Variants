@@ -9,5 +9,6 @@ public interface ModelAdapter {
 
     StoreModel convertToStoreModel(WhoisObject whoisObject);
 
-    Class getModelClass(@SuppressWarnings("SameParameterValue") String id);
+    @SuppressWarnings("SameParameterValue")
+    Class getModelClass(String id);
 }

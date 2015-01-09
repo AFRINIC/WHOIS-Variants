@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import whois.core.AbstractDatabaseTestCase;
+import whois.core.api.Observer;
 import whois.core.api.Store;
 import whois.core.model.blob.BlobModel;
 import whois.core.model.rpsl.RpslWhoisObject;
@@ -12,6 +13,9 @@ import whois.core.model.rpsl.RpslWhoisObject;
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by yogesh on 12/18/14.
@@ -22,6 +26,9 @@ public class SpringDaoTest extends AbstractDatabaseTestCase {
 
     @Inject
     private Store subject;
+
+    @Inject
+    private Observer observer;
 
     @Test
     public void testQuery() {
@@ -38,11 +45,18 @@ public class SpringDaoTest extends AbstractDatabaseTestCase {
         RpslWhoisObject rwo = new RpslWhoisObject();
         rwo.put("a", " b");
         rwo.put("b", "x");
-        subject.persist(rwo, null);
+        subject.persist(rwo, observer);
 
         Map<String, String> expectedData = new LinkedHashMap<String, String>();
         expectedData.put("a", "b");
         expectedData.put("b", "x");
         assertDataEquals(expectedData, subject, BlobModel.class, " a: b  ");
+    }
+
+    @Test
+    public void testDelete() {
+        assertNotNull(subject.load(BlobModel.class, "a:b", observer));
+        subject.delete(BlobModel.class, "a:b", observer);
+        assertNull(subject.load(BlobModel.class, "a:b", observer));
     }
 }

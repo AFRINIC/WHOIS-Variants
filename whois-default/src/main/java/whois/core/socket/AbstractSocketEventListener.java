@@ -38,7 +38,7 @@ abstract class AbstractSocketEventListener extends IoHandlerAdapter {
             getLogger().error("Exception on socket listener", cause);
             session.write("UNEXPECTED ERROR: " + cause.getMessage());
         }
-        session.close();
+        session.close(false);
     }
 
     protected abstract Logger getLogger();

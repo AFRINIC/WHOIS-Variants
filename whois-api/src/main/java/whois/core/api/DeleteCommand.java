@@ -6,11 +6,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Created by yogesh on 12/23/14.
+ * Created by yogesh on 1/9/15.
  */
 @Named
 @Scope("prototype")
-public class QueryCommand implements Command {
+public class DeleteCommand implements Command {
 
     @Inject
     private Store store;
@@ -23,13 +23,13 @@ public class QueryCommand implements Command {
 
     private String commandLine;
 
-    public void run() {
-        Class objectType = modelAdapter.getModelClass(null);
-        store.load(objectType, commandLine, observer);
+    public void setParameter(String parameter) {
+        commandLine = parameter;
     }
 
-    public void setParameter(String commandLine) {
-        this.commandLine = commandLine;
+    public void run() {
+        Class objectType = modelAdapter.getModelClass(null);
+        store.delete(objectType, commandLine, observer);
     }
 
     public String getResult() {

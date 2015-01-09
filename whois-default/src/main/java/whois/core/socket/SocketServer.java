@@ -27,6 +27,8 @@ class SocketServer {
 
     private static final int UPDATE_PORT = 4444;
 
+    private static final int DELETE_PORT = 4445;
+
     private static final int SOCKET_READ_BUFFER_SIZE = 2048;
 
     private static final String CHARSET = "UTF-8";
@@ -36,11 +38,12 @@ class SocketServer {
 
         bind(applicationContext.getBean(QuerySocketEventListener.class), QUERY_PORT);
         bind(applicationContext.getBean(UpdateSocketEventListener.class), UPDATE_PORT);
+        bind(applicationContext.getBean(DeleteSocketEventListener.class), DELETE_PORT);
 
         logger.info("STARTED");
     }
 
-    private static IoAcceptor bind(IoHandler ioHandler, int port) throws IOException {
+    private static void bind(IoHandler ioHandler, int port) throws IOException {
         IoAcceptor queryAcceptor = new NioSocketAcceptor();
         queryAcceptor.getFilterChain().addLast("logger", new LoggingFilter());
         queryAcceptor.getFilterChain().addLast("codec",
@@ -51,7 +54,5 @@ class SocketServer {
         queryAcceptor.bind(new InetSocketAddress(port));
 
         logger.info(ioHandler + " is listening on port " + port);
-
-        return queryAcceptor;
     }
 }

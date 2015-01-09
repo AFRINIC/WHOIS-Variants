@@ -29,7 +29,7 @@ public class UpdateSocketEventListener extends AbstractSocketEventListener {
             String rpsl = multiLineAccumulator.toString();
             multiLineAccumulator.setLength(0);
             process(session, rpsl);
-            session.close();
+            session.close(false);
             return;
         }
         multiLineAccumulator.append(command).append("\n");

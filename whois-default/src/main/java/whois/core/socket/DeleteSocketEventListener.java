@@ -3,7 +3,7 @@ package whois.core.socket;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import whois.core.api.QueryCommand;
+import whois.core.api.DeleteCommand;
 
 import javax.inject.Named;
 
@@ -11,9 +11,9 @@ import javax.inject.Named;
  * Created by yogesh on 12/22/14.
  */
 @Named
-public class QuerySocketEventListener extends AbstractSocketEventListener {
+public class DeleteSocketEventListener extends AbstractSocketEventListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(QuerySocketEventListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeleteSocketEventListener.class);
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
@@ -25,7 +25,7 @@ public class QuerySocketEventListener extends AbstractSocketEventListener {
 
     @Override
     public String toString() {
-        return "Query handler";
+        return "Delete handler";
     }
 
     @Override
@@ -35,6 +35,6 @@ public class QuerySocketEventListener extends AbstractSocketEventListener {
 
     @Override
     protected Class getCommandId() {
-        return QueryCommand.class;
+        return DeleteCommand.class;
     }
 }

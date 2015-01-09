@@ -1,14 +1,11 @@
 package whois.core.database;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import whois.core.api.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by yogesh on 12/18/14.
@@ -27,37 +24,45 @@ public class SpringDao implements Store {
         StoreModel storeModel = modelAdapter.convertToStoreModel(whoisObject);
         session.saveOrUpdate(storeModel);
         session.flush();
-        if (observer != null) {
-            observer.notify("Successfully added:\n" + whoisObject.toString());
-        }
+        observer.notify("Successfully added:\n" + whoisObject.toString());
         session.close();
-    }
-
-    public List<WhoisObject> load(Class clazz) {
-        Session session = sessionFactory.openSession();
-        Criteria c = session.createCriteria(clazz);
-        List<StoreModel> result = c.list();
-        List<WhoisObject> retVal = new ArrayList<WhoisObject>();
-        for (StoreModel storeModel : result) {
-            retVal.add(modelAdapter.convertToWhoisObject(storeModel));
-        }
-        session.close();
-        return retVal;
     }
 
     /**
      * Before querying, Key is normalized according to rules in <code>RpslWhoisObject#put</code>.
      *
-     * @param clazz Model class
-     * @param key   Lookup key
+     * @param clazz    Model class
+     * @param key      Lookup key
+     * @param observer Observer
      * @return WHOIS Object found
      */
-    public WhoisObject load(Class clazz, String key) {
+    public WhoisObject load(Class clazz, String key, Observer observer) {
         key = key.trim().replaceFirst(":\\s+", ":");
         Session session = sessionFactory.openSession();
         StoreModel storeModel = (StoreModel) session.get(clazz, key);
-        WhoisObject retVal = modelAdapter.convertToWhoisObject(storeModel);
+        WhoisObject retVal = null;
+        if (storeModel != null) {
+            retVal = modelAdapter.convertToWhoisObject(storeModel);
+            observer.notify("Found:\n" + retVal.toString());
+        } else {
+            observer.notify("Object with key \"" + key + "\" not found");
+        }
         session.close();
         return retVal;
+    }
+
+    public void delete(Class clazz, String key, Observer observer) {
+        key = key.trim().replaceFirst(":\\s+", ":");
+        Session session = sessionFactory.openSession();
+        StoreModel storeModel = (StoreModel) session.get(clazz, key);
+        if (storeModel != null) {
+            session.delete(storeModel);
+            session.flush();
+            WhoisObject whoisObject = modelAdapter.convertToWhoisObject(storeModel);
+            observer.notify("Successfully deleted:\n" + whoisObject.toString());
+        } else {
+            observer.notify("Object with key \"" + key + "\" not found");
+        }
+        session.close();
     }
 }
