@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 @Named
 @Scope("prototype")
-public class UpdateCommand implements Command {
+public class UpdateCommand implements Command<String, String> {
 
     private String rpsl;
 
@@ -56,6 +56,7 @@ public class UpdateCommand implements Command {
             authenticator.authenticate(whoisObject, allCredentials, observer);
             validator.validate(whoisObject, observer);
             enricher.enrich(whoisObject, observer);
+            //noinspection unchecked
             store.persist(whoisObject, observer);
         }
     }

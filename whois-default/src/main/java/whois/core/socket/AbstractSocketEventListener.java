@@ -60,7 +60,7 @@ abstract class AbstractSocketEventListener extends IoHandlerAdapter {
     }
 
     void process(IoSession session, String commandLine) {
-        Command updateCommand = commandFactory.getCommand(getCommandId());
+        @SuppressWarnings("unchecked") Command<String, String> updateCommand = commandFactory.getCommand(getCommandId());
         updateCommand.setParameter(commandLine);
         updateCommand.run();
         session.write(updateCommand.getResult());

@@ -7,7 +7,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import whois.core.AbstractDatabaseTestCase;
 import whois.core.api.Observer;
 import whois.core.api.Store;
-import whois.core.model.blob.BlobModel;
 import whois.core.model.rpsl.RpslWhoisObject;
 
 import javax.inject.Inject;
@@ -20,6 +19,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by yogesh on 12/18/14.
  */
+@SuppressWarnings("unchecked")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/whois-core-context.xml", "/whois-core-test-context.xml"})
 public class SpringDaoTest extends AbstractDatabaseTestCase {
@@ -36,8 +36,8 @@ public class SpringDaoTest extends AbstractDatabaseTestCase {
         expectedDataA.put("a", "b");
         Map<String, String> expectedDataC = new LinkedHashMap<String, String>();
         expectedDataC.put("c", "d");
-        assertDataEquals(expectedDataA, subject, BlobModel.class, "a:b");
-        assertDataEquals(expectedDataC, subject, BlobModel.class, "c:d");
+        assertDataEquals(expectedDataA, subject, "a:b");
+        assertDataEquals(expectedDataC, subject, "c:d");
     }
 
     @Test
@@ -50,13 +50,13 @@ public class SpringDaoTest extends AbstractDatabaseTestCase {
         Map<String, String> expectedData = new LinkedHashMap<String, String>();
         expectedData.put("a", "b");
         expectedData.put("b", "x");
-        assertDataEquals(expectedData, subject, BlobModel.class, " a: b  ");
+        assertDataEquals(expectedData, subject, " a: b  ");
     }
 
     @Test
     public void testDelete() {
-        assertNotNull(subject.load(BlobModel.class, "a:b", observer));
-        subject.delete(BlobModel.class, "a:b", observer);
-        assertNull(subject.load(BlobModel.class, "a:b", observer));
+        assertNotNull(subject.load("a:b", observer));
+        subject.delete("a:b", observer);
+        assertNull(subject.load("a:b", observer));
     }
 }

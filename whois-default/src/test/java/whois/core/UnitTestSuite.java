@@ -2,6 +2,7 @@ package whois.core;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import whois.core.api.DeleteCommandTest;
 import whois.core.api.QueryCommandTest;
 import whois.core.api.UpdateCommandTest;
 import whois.core.database.SpringDaoTest;
@@ -17,6 +18,7 @@ import whois.core.model.rpsl.RpslWhoisObjectAdapterTest;
         BlobModelAdapterTest.class,
         RpslWhoisObjectAdapterTest.class,
         QueryCommandTest.class,
-        UpdateCommandTest.class})
+        UpdateCommandTest.class,
+        DeleteCommandTest.class})
 public class UnitTestSuite {
 }

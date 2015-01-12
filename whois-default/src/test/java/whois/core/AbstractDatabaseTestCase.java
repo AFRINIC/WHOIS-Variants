@@ -70,9 +70,9 @@ public abstract class AbstractDatabaseTestCase implements InitializingBean {
     }
 
 
-    protected void assertDataEquals(Map<String, String> expectedData, Store store, Class searchCriteria, String key) {
+    protected void assertDataEquals(Map<String, String> expectedData, Store<String, WhoisObject> store, String key) {
         List<String> matchedKeys = new ArrayList<String>();
-        WhoisObject wo = store.load(searchCriteria, key, new Observer() {
+        WhoisObject wo = store.load(key, new Observer() {
             public void notify(String message) {
             }
 

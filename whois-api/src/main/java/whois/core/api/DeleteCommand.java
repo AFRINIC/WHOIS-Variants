@@ -10,16 +10,13 @@ import javax.inject.Named;
  */
 @Named
 @Scope("prototype")
-public class DeleteCommand implements Command {
+public class DeleteCommand implements Command<String, String> {
 
     @Inject
     private Store store;
 
     @Inject
     private Observer observer;
-
-    @Inject
-    private ModelAdapter modelAdapter;
 
     private String commandLine;
 
@@ -28,8 +25,8 @@ public class DeleteCommand implements Command {
     }
 
     public void run() {
-        Class objectType = modelAdapter.getModelClass(null);
-        store.delete(objectType, commandLine, observer);
+        //noinspection unchecked
+        store.delete(commandLine, observer);
     }
 
     public String getResult() {

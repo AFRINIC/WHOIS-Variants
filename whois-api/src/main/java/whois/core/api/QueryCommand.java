@@ -10,7 +10,7 @@ import javax.inject.Named;
  */
 @Named
 @Scope("prototype")
-public class QueryCommand implements Command {
+public class QueryCommand implements Command<String, String> {
 
     @Inject
     private Store store;
@@ -18,14 +18,11 @@ public class QueryCommand implements Command {
     @Inject
     private Observer observer;
 
-    @Inject
-    private ModelAdapter modelAdapter;
-
     private String commandLine;
 
     public void run() {
-        Class objectType = modelAdapter.getModelClass(null);
-        store.load(objectType, commandLine, observer);
+        //noinspection unchecked
+        store.load(commandLine, observer);
     }
 
     public void setParameter(String commandLine) {
