@@ -1,6 +1,6 @@
-<configuration debug="${log-debug:-false}" scan="${log-scan:-true}">
+<configuration debug="${log-debug:-false}" scan="${log-scan:-false}">
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
