@@ -9,13 +9,5 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>whois-api</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>whois.core</groupId>
-            <artifactId>command-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>command-api</artifactId>
 </project>

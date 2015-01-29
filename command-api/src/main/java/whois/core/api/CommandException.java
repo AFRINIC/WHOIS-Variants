@@ -5,7 +5,7 @@ package whois.core.api;
  */
 public class CommandException extends RuntimeException {
 
-    protected CommandException(String msg) {
+    public CommandException(String msg) {
         super(msg);
     }
 }

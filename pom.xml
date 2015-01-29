@@ -10,8 +10,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <modules>
+        <module>command-api</module>
         <module>whois-api</module>
         <module>whois-default</module>
+        <module>ip-tools</module>
     </modules>
 
     <groupId>whois.core</groupId>
