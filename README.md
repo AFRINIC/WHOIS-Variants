@@ -1,3 +1,10 @@
+WARNING
+=======
+
+Note that this project is discontinued and proposed as archive only.
+No fix will be added to it.
+
+
 WHOIS Core
 ==========
 
